@@ -1,7 +1,7 @@
 credentials.env
 *.tfstate*
 */.terraform
-*/output/*
+/output/*.*
 *.out
 *.log
 *~
