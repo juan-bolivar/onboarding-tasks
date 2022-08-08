@@ -1,5 +1,5 @@
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "${var.ami_name}-${formatdate("MM-DD-YYYY", timestamp())}"
+  ami_name      = "${var.ami_name}-${formatdate("MM-DD-YYYY", timestamp())}-${substr(uuidv4(), 0, 4)}"
   instance_type = "${var.instance_type}"
   region        = "${var.region}"
   source_ami_filter {

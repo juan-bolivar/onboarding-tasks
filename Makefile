@@ -1,24 +1,26 @@
-.PHONY: build terraform terraform-destroy packer 
+.PHONY: build run clean
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+CRED_FILE= credentials.env
+DOCKER_COMMAND= docker run --volume=$(ROOT_DIR)/output:/usr/src/app/output --env-file $(CRED_FILE) -it packer /bin/bash 
+REGION= $(shell tail -n 1 "$(CRED_FILE)" | tr -d AWS_REGION=)
 
-run: build packer terraform
-
-clean: terraform-destroy
-	rm -rf output/
+run: build output/ami-id.out terraform
 
 build:
 	docker build -t packer .
 
-packer: 
+output/ami-id.out:
 	rm -rf output/
 	mkdir output
-	docker run --volume=$(ROOT_DIR)/output:/usr/src/app/output --env-file credentials.env -it packer /bin/bash -c "cd ./packer && packer build -machine-readable . | tee /usr/src/app/output/build.log"
+	$(DOCKER_COMMAND) -c "cd ./packer && packer build -machine-readable . | tee /usr/src/app/output/build.log"
 	grep "artifact,0,id" output/build.log | cut -d, -f6 | cut -d: -f2 > output/ami-id.out
 
-terraform:
+terraform: output/ami-id.out 
+	$(DOCKER_COMMAND) -c 'cd ./terraform && terraform init  && terraform apply -var="ami_id=$(shell cat "output/ami-id.out")" -var="region=$(REGION)" -auto-approve'
 
-	docker run --env-file credentials.env --volume=$(ROOT_DIR)/output:/usr/src/app/output -it packer /bin/bash  -c 'cd ./terraform && terraform init  && terraform apply -var="ami_id=$(shell cat "output/ami-id.out")" -var="region=$(shell tail -n 1 "credentials.env" | tr -d AWS_REGION=)" -auto-approve'
+terraform-destroy: output/ami-id.out
+	$(DOCKER_COMMAND) -c 'cd terraform &&  terraform init && terraform destroy -var="ami_id=$(shell cat "output/ami-id.out")" -var="region=$(REGION)" -auto-approve'
 
-terraform-destroy:
-	cd terraform && terraform destroy -var="ami_id=$(shell cat 'output/ami-id.out')" -auto-approve
+clean: terraform-destroy
+	rm -rf output/

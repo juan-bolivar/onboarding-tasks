@@ -1,4 +1,3 @@
-
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
   instance_tenancy = "default"
@@ -364,7 +363,15 @@ resource "aws_iam_role" "workernodes" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role    = aws_iam_role.workernodes.name
  }
+ 
+ # resource "aws_iam_role_policy_attachment" "VPC_CNI" {
+ #  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+ #  role    = aws_iam_role.workernodes.name
+ # }
 
+
+
+ 
 resource "aws_launch_template" "own-launch" {
 
   #image_id  = "ami-018a26bc24633bb18"
