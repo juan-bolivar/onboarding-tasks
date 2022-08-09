@@ -1,4 +1,4 @@
-.PHONY: build run clean
+.PHONY: build run clean kubernetes
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 CRED_FILE= credentials.env
@@ -8,7 +8,7 @@ REGION= $(shell tail -n 1 "$(CRED_FILE)" | tr -d AWS_REGION=)
 run: build output/ami-id.out terraform
 
 build:
-	docker build -t packer .
+	docker build --no-cache -t packer .
 
 output/ami-id.out:
 	rm -rf output/
@@ -21,6 +21,11 @@ terraform: output/ami-id.out
 
 terraform-destroy: output/ami-id.out
 	$(DOCKER_COMMAND) -c 'cd terraform &&  terraform init && terraform destroy -var="ami_id=$(shell cat "output/ami-id.out")" -var="region=$(REGION)" -auto-approve'
+
+
+kubernetes:
+	$(DOCKER_COMMAND) -c 'cd kubernetes && bash ./script.sh'
+
 
 clean: terraform-destroy
 	rm -rf output/

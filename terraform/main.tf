@@ -149,6 +149,9 @@ resource "aws_key_pair" "deployer" {
   public_key = tls_private_key.tls-private.public_key_openssh
 }
 
+################################################################
+################################################################
+
 
 
 
@@ -234,6 +237,30 @@ resource "aws_security_group" "sg-privada" {
  } 
 
 
+
+ ingress {
+    from_port        = 9443
+    to_port          = 9443
+    protocol         = "tcp"
+    cidr_blocks      = [aws_subnet.public-1.cidr_block]
+  
+ } 
+
+
+
+ ingress {
+    from_port        = 9443
+    to_port          = 9443
+    protocol         = "tcp"
+    cidr_blocks      = [aws_subnet.public-2.cidr_block]
+  
+ } 
+
+
+
+
+
+
  ingress {
     from_port        = 8843
     to_port          = 8843
@@ -313,7 +340,10 @@ resource "aws_eks_cluster" "my-cluster" {
 
   vpc_config {
     subnet_ids = [aws_subnet.public-1.id,aws_subnet.public-2.id]
+    security_group_ids = [aws_security_group.sg-publica.id]
+    
   }
+
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.

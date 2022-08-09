@@ -2,7 +2,7 @@
 
 ## Configuration
 
-Create a file credentials.env with the following variables:
+Create a file *credentials.env* with the following variables:
 
 
 AWS_ACCESS_KEY_ID=
@@ -19,6 +19,6 @@ Please run with the following command
 
 
 ```
-make run  
+make
 
 ```
