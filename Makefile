@@ -7,6 +7,14 @@ REGION= $(shell tail -n 1 "$(CRED_FILE)" | tr -d AWS_REGION=)
 
 run: build output/ami-id.out terraform
 
+
+concourse:
+	curl -O https://concourse-ci.org/docker-compose.yml
+	docker-compose up -d
+	curl 'http://localhost:8080/api/v1/cli?arch=amd64&platform=linux' -o fly  && chmod +x ./fly 
+	./fly -t infra-concourse login -c http://localhost:8080 -u test -p test
+	./fly -t infra-concourse set-pipeline -p infra -c concurseCI/pipeline.yaml 
+
 build:
 	docker build --no-cache -t packer .
 

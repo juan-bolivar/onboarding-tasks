@@ -28,3 +28,9 @@ jobs:
         UNPACK_ROOTFS: true #add this param
       run: # binary used to build the image
         path: build
+  - task: use-built-image-in-task  # add a new task step
+    image: image  # using the image built in the previous step
+    config:
+      platform: linux
+      run:
+        path: ls

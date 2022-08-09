@@ -5,3 +5,5 @@ credentials.env
 *.out
 *.log
 *~
+fly
+*docker-compose.yml
