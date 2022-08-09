@@ -1,0 +1,30 @@
+resources:
+# The repo with our Dockerfile
+- name: concourse-examples
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/juan-bolivar/onboarding-tasks.git
+    branch: infra
+
+jobs:
+- name: build-and-run
+  plan:
+  - get: concourse-examples
+  - task: build-image
+    privileged: true # oci-build-task must run in a privileged container
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: concourse/oci-build-task
+      inputs:
+      - name: concourse-examples
+      outputs:
+      - name: image
+      params:
+        CONTEXT: concourse-examples/Dockerfile
+        UNPACK_ROOTFS: true #add this param
+      run: # binary used to build the image
+        path: build
