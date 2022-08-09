@@ -2,12 +2,13 @@
 FROM ubuntu
 
 ###### INSTALLING ANSIBLE ###################################
-RUN apt-get update && apt-get upgrade -y &&  apt-get install -y curl
+RUN apt-get update && apt-get upgrade -y 
+#&&  apt-get install -y curl
 RUN apt-get install software-properties-common -y
 RUN apt-add-repository ppa:ansible/ansible -y
 RUN apt-get install ansible -y
 RUN apt-get -y install openssh-client
-RUN apt-get -y install unzip jq
+RUN apt-get -y install unzip jq curl
 #RUN apt-get install apt-transport-https
 
 ###### INSTALLING AWS CLI ######################################
