@@ -55,7 +55,7 @@ jobs:
         AWS_REGION: ((AWS_REGION))
         AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
  
-  - task: terraform-1  # add a new task step
+  - task: terraform  # add a new task step
     image: image
     privileged: true
     config:
@@ -76,7 +76,32 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ((AWS_SECRET))
         AWS_REGION: ((AWS_REGION))
         AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
+
+  - task: kubernetes  # add a new task step
+    image: image
+    privileged: true
+    config:
+      inputs:
+      - name: output_packer
+      - name: concourse-examples
+      platform: linux
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          ls
+          cd concourse-examples/kubernetes
+          bash script.sh 
+      params:
+        AWS_ACCESS_KEY_ID: ((AWS_KEY))
+        AWS_SECRET_ACCESS_KEY: ((AWS_SECRET))
+        AWS_REGION: ((AWS_REGION))
+        AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
  
+
+
+
 
 
  
