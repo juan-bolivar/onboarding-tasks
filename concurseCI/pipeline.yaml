@@ -1,5 +1,4 @@
 resources:
-# The repo with our Dockerfile
 - name: concourse-examples
   type: git
   icon: github
@@ -7,6 +6,13 @@ resources:
     uri: https://github.com/juan-bolivar/onboarding-tasks.git
     branch: infra
 
+resource_types:
+- name: fly
+  type: docker-image
+  source:
+    repository: troykinsella/concourse-fly-resource
+    tag: latest
+    
 jobs:
 - name: build-and-run
   plan:
@@ -26,11 +32,11 @@ jobs:
       params:
         CONTEXT: concourse-examples
         UNPACK_ROOTFS: true #add this param
-      run: # binary used to build the image
+      run: 
         path: build
 
-  - task: packer  # add a new task step
-    image: image  # using the image built in the previous step
+  - task: packer 
+    image: image
     privileged: true # oci-build-task must run in a privileged container
     config:
       inputs:
@@ -55,13 +61,15 @@ jobs:
         AWS_REGION: ((AWS_REGION))
         AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
  
-  - task: terraform  # add a new task step
+  - task: terraform  
     image: image
     privileged: true
     config:
       inputs:
       - name: output_packer
       - name: concourse-examples
+      outputs:
+      - name: output_terraform
       platform: linux
       run:
         path: sh
@@ -77,7 +85,7 @@ jobs:
         AWS_REGION: ((AWS_REGION))
         AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
 
-  - task: kubernetes  # add a new task step
+  - task: kubernetes  
     image: image
     privileged: true
     config:
@@ -98,10 +106,25 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ((AWS_SECRET))
         AWS_REGION: ((AWS_REGION))
         AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
- 
-
-
-
-
-
- 
+        
+  - task: helm-chart  
+    image: image
+    privileged: true
+    config:
+      inputs:
+      - name: output_packer
+      - name: concourse-examples
+      platform: linux
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          ls
+          cd concourse-examples/helm-chart
+          bash script.sh
+      params:
+        AWS_ACCESS_KEY_ID: ((AWS_KEY))
+        AWS_SECRET_ACCESS_KEY: ((AWS_SECRET))
+        AWS_REGION: ((AWS_REGION))
+        AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))

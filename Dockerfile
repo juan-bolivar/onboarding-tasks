@@ -31,6 +31,7 @@ COPY ./packer/  /usr/src/app/packer
 COPY ./ansible/ /usr/src/app/ansible
 COPY ./terraform/ /usr/src/app/terraform
 COPY ./kubernetes/ /usr/src/app/kubernetes
+COPY ./helm-chart/ /usr/src/app/helm-chart
 VOLUME output
 CMD ["/sbin/init"]
 
@@ -53,3 +54,13 @@ RUN echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
     https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
     tee /etc/apt/sources.list.d/hashicorp.list
 RUN apt update && apt-get install terraform -y
+
+##### INSTALLING HELM  #########################
+
+RUN apt-get install -y helm
+RUN helm init
+RUN helm repo add stable https://kubernetes-charts.storage.googleapis.com
+RUN helm repo update
+RUN helm version
+
+

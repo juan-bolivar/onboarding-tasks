@@ -6,13 +6,13 @@ aws eks update-kubeconfig --name my-cluster
 
 #sed -i .bak -e 's/v1alpha1/v1beta1/' ~/.kube/config
 
-kubectl get nodes --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
+# kubectl get nodes --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
 
-kubectl apply -f Deployment.yaml --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
+# kubectl apply -f Deployment.yaml --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
 
-kubectl apply -f service-loadbalancer.yaml --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
+# kubectl apply -f service-loadbalancer.yaml --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
 
-kubectl describe service hello-kubernetes --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
+# kubectl describe service --cluster=$(aws eks describe-cluster --name my-cluster | jq -r .cluster.arn)
 
 # eksctl create addon \
 #     --name vpc-cni \

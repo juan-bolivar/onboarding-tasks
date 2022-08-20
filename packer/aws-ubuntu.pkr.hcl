@@ -13,6 +13,7 @@ source "amazon-ebs" "ubuntu" {
   }
   ssh_username = "ubuntu"
   ssh_password = "temp-password"
+  associate_public_ip_address = true
   user_data_file = "/usr/src/app/packer/user_data.sh"
   
 }
@@ -28,7 +29,6 @@ build {
     script = "/usr/src/app/ansible/ansible.sh"
   }
 
-  
   provisioner "ansible-local" {
     playbook_file    = "/usr/src/app/ansible/playbook.yaml"
     role_paths       = ["/usr/src/app/ansible_collections/devsec/hardening/roles/os_hardening","/usr/src/app/ansible/roles/geerlingguy.docker","/usr/src/app/ansible/roles/geerlingguy.kubernetes"]
