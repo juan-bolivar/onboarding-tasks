@@ -57,7 +57,7 @@ RUN apt update && apt-get install terraform -y
 
 ##### INSTALLING HELM  #########################
 
-RUN apt-get install -y helm
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 RUN helm init
 RUN helm repo add stable https://kubernetes-charts.storage.googleapis.com
 RUN helm repo update
