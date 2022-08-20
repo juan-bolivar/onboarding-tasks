@@ -49,6 +49,7 @@ jobs:
         args:
         - -exc
         - |
+          export PKR_VAR_region=$AWS_REGION
           cd concourse-examples/packer && packer build -machine-readable . | tee ../../output_packer/build.log
           cd ..
           cd ..
