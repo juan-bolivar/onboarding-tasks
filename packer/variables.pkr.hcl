@@ -20,7 +20,8 @@ variable "aws_secret_key"{
 variable "region" {
   type    = string
   #default = "{{env `AWS_REGION`}}"
-  default = "us-east-1"
+  default = "{{env `AWS_REGION`}}"
+  #default = "us-east-1"
 }
 
 variable "name" {
