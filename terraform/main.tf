@@ -470,6 +470,7 @@ terraform {
 
 module "datadog" {
   source = "../datadog/"
+  
   datadog_api_key = var.datadog_api_key
   cluster_name = aws_eks_cluster.my-cluster.name
   cluster_endpoint = aws_eks_cluster.my-cluster.endpoint
