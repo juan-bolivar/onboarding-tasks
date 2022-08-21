@@ -80,12 +80,14 @@ jobs:
           ls 
           ami_id=$(cat output_packer/ami-id.out)
           export TF_VAR_datadog_api_key="((DATA_DOG_API_KEY))"
+          env
           cd concourse-examples/terraform && terraform init  && terraform apply -var="ami_id=$ami_id" -var="region=((AWS_REGION))" -auto-approve
       params:
         AWS_ACCESS_KEY_ID: ((AWS_KEY))
         AWS_SECRET_ACCESS_KEY: ((AWS_SECRET))
         AWS_REGION: ((AWS_REGION))
         AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
+        DATA_DOG_API_KEY: ((DATA_DOG_API_KEY))
 
   - task: kubernetes  
     image: image

@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "datadog" {
-  api_key = var.DATADOG_API_KEY
+  api_key = var.data_dog_api_key
 }
 
 
