@@ -3,6 +3,12 @@ variable "datadog_api_key" {
   description = "Datadog API Key"
 }
 
+variable "datadog_app_key" {
+  type = string
+  description = "Datadog API Key"
+}
+
+
 variable "cluster_name" {
   type = string
   description = "Cluster Name"
