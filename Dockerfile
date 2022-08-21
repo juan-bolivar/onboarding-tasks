@@ -32,6 +32,7 @@ COPY ./ansible/ /usr/src/app/ansible
 COPY ./terraform/ /usr/src/app/terraform
 COPY ./kubernetes/ /usr/src/app/kubernetes
 COPY ./helm-chart/ /usr/src/app/helm-chart
+COPY ./datadog/ /usr/src/app/datadog
 VOLUME output
 CMD ["/sbin/init"]
 

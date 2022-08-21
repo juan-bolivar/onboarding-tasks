@@ -464,6 +464,17 @@ terraform {
   backend "local" { path = "../output/terraform.tfstate" }
 }
 
+
+#########################################################
+### DATADOG #############################################
+
+module "datadog" {
+  source = "../datadog/"
+  cluster_name = aws_eks_cluster.my-cluster.name
+  cluster_endpoint = aws_eks_cluster.my-cluster.endpoint
+  cluster_ca_cert = aws_eks_cluster.my-cluster.certificate_authority[0].data
+}
+
 #########################################################
 ### OUTPUT ##############################################
 
