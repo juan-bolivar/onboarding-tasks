@@ -15,6 +15,7 @@ resource "helm_release" "datadog_agent" {
   chart      = "datadog"
   repository = "https://helm.datadoghq.com"
   version    = "2.10.1"
+  
   #namespace  = kubernetes_namespace.beacon.id
 
   set_sensitive {
@@ -23,12 +24,7 @@ resource "helm_release" "datadog_agent" {
   }
 
   
-  set_sensitive {
-    name  = "datadog.appKey"
-    value = var.datadog_app_key
-  }
-
-
+ 
   set {
     name  = "datadog.logs.enabled"
     value = true

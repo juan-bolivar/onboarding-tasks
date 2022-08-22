@@ -9,7 +9,6 @@ terraform {
 provider "datadog" {
   api_key = var.datadog_api_key
   app_key = var.datadog_app_key
-  validate = false
 }
 
 
@@ -20,6 +19,16 @@ resource "datadog_monitor" "beacon" {
   escalation_message = "Please investigate the Kubernetes Pods, @operator"
   query = "max(last_10m):max:kubernetes_state.container.status_report.count.waiting{reason:imagepullbackoff} by {kube_namespace,pod_name} >= 1"
   notify_no_data = true
+
+ monitor_thresholds {
+    ok       = 3
+    warning  = 2
+    critical = 1
+  }
+
+  notify_no_data = true
+
+  tags = ["app:beacon", "env:demo"]
 
 }
 
