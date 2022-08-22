@@ -21,8 +21,6 @@ resource "datadog_monitor" "beacon" {
   notify_no_data = true
 
  monitor_thresholds {
-    ok       = 3
-    warning  = 2
     critical = 1
   }
 
