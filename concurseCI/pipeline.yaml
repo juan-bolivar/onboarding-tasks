@@ -83,6 +83,8 @@ jobs:
           export TF_VAR_datadog_app_key="((DATADOG_APP_KEY))"
           export DATADOG_APP_KEY="((DATADOG_APP_KEY))"
           export DATADOG_API_KEY="((DATADOG_API_KEY))"
+          export DD_API_KEY="((DATADOG_API_KEY))"
+          export DD_APP_KEY="((DATADOG_APP_KEY))"
           env
           cd concourse-examples/terraform && terraform init  && terraform apply -var="ami_id=$ami_id" -var="region=((AWS_REGION))" -auto-approve
       params:
@@ -92,6 +94,8 @@ jobs:
         AWS_DEFAULT_REGION: ((AWS_DEFAULT_REGION))
         DATADOG_API_KEY: ((DATADOG_API_KEY))
         DATADOG_APP_KEY: ((DATADOG_APP_KEY))
+        DD_APP_KEY: ((DATADOG_APP_KEY))
+        DD_API_KEY: ((DATADOG_API_KEY))
 
   - task: kubernetes  
     image: image

@@ -26,7 +26,6 @@ resource "datadog_monitor" "beacon" {
     critical = 1
   }
 
-  notify_no_data = true
 
   tags = ["app:beacon", "env:demo"]
 
