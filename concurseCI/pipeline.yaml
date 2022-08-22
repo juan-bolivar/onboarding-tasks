@@ -79,9 +79,10 @@ jobs:
         - |
           ls 
           ami_id=$(cat output_packer/ami-id.out)
-          export TF_VAR_datadog_api_key="((DATA_DOG_API_KEY))"
-          export TF_VAR_datadog_app_key="((DATA_DOG_APP_KEY))"
-          export DATADOG_APP_KEY="((DATA_DOG_APP_KEY))"
+          export TF_VAR_datadog_api_key="((DATADOG_API_KEY))"
+          export TF_VAR_datadog_app_key="((DATADOG_APP_KEY))"
+          export DATADOG_APP_KEY="((DATADOG_APP_KEY))"
+          export DATADOG_API_KEY="((DATADOG_API_KEY))"
           env
           cd concourse-examples/terraform && terraform init  && terraform apply -var="ami_id=$ami_id" -var="region=((AWS_REGION))" -auto-approve
       params:
