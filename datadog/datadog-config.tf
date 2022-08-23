@@ -5,6 +5,10 @@ terraform {
       source = "hashicorp/helm"
       version = "2.2.0"
     }
+  
+    datadog = {
+      source = "DataDog/datadog"
+    }
   }
 }
 
