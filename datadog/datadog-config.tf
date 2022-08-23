@@ -32,7 +32,7 @@ resource "helm_release" "datadog_agent" {
   repository = "https://helm.datadoghq.com"
   version    = "2.10.1"
   
-  namespace  = kubernetes_namespace.default.id
+#  namespace  = kubernetes_namespace.default.id
 
   set_sensitive {
     name  = "datadog.apiKey"
