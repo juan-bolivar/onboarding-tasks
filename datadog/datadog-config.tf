@@ -1,3 +1,14 @@
+
+terraform {
+  required_providers {
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.2.0"
+    }
+  }
+}
+
+
 provider "helm" {
   kubernetes {
     host                   = var.cluster_endpoint
@@ -10,13 +21,14 @@ provider "helm" {
   }
 }
 
+
 resource "helm_release" "datadog_agent" {
   name       = "datadog-agent"
   chart      = "datadog"
   repository = "https://helm.datadoghq.com"
   version    = "2.10.1"
   
-  #namespace  = kubernetes_namespace.beacon.id
+  namespace  = kubernetes_namespace.default.id
 
   set_sensitive {
     name  = "datadog.apiKey"
