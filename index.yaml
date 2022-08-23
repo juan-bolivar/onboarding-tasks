@@ -3,12 +3,12 @@ entries:
   helm-chart:
   - apiVersion: v2
     appVersion: "2.4"
-    created: "2022-08-23T18:36:36.940311671-05:00"
+    created: "2022-08-23T18:55:52.761661127-05:00"
     description: A Helm chart for Kubernetes
-    digest: 06ce632766488fdc7ed8077a7b1b3a1e0d3a15a6cf5b50124149bb122da50dae
+    digest: e519c22ab161ca7e25b897f71a0ae90be05783fc400a5c21a79ca85fb39a4173
     name: helm-chart
     type: application
     urls:
-    - charts/helm-chart-0.2.0.tgz
-    version: 0.2.0
-generated: "2022-08-23T18:36:36.939740911-05:00"
+    - charts/helm-chart-0.3.0.tgz
+    version: 0.3.0
+generated: "2022-08-23T18:55:52.761098909-05:00"
