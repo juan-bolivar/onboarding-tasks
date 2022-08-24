@@ -5,15 +5,23 @@
 Create a file *credentials.env* with the following variables:
 
 
+
 AWS_ACCESS_KEY_ID=
 
 AWS_SECRET_ACCESS_KEY=
 
-AWS_REGION= 
+AWS_REGION=
 
-AWS_DEFAULT_REGION= 
+AWS_DEFAULT_REGION=
 
-DATA_DOG_API_KEY=
+DATADOG_API_KEY=
+
+DATADOG_APP_KEY=
+
+GITHUB_USER=
+
+GITHUB_TOKEN=
+
 
 ## Run
 
